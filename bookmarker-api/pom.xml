@@ -257,10 +257,6 @@
 					<!-- 생성된 이미지는 바로 Docker hub로 전송된다 -->
 					<to>
 						<image>docker.io/meltingujin/${project.artifactId}</image>
-						<auth>
-							<username>meltingujin</username>
-							<password>dckr_pat_q_NF-n11vo2tge5E3Qn4nlCLGPQ</password>
-						</auth>
 					</to>
 				</configuration>
 			</plugin>
