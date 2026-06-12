@@ -28,17 +28,10 @@ jobs:
           chmod +x mvnw
           ./mvnw verify
 
-      # 로그인을 빌드 전에, --password-stdin 방식으로
-      - name: Docker Login
-        if: github.ref == 'refs/heads/main'
-        run: |
-          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login \
-            -u "${{ secrets.DOCKER_NAME }}" \
-            --password-stdin
-
-      # Jib으로 빌드 + Docker Hub에 직접 푸시 (docker build/push 불필요)
       - name: Build and Push Image
         if: github.ref == 'refs/heads/main'
         run: |
-          ./mvnw clean package jib:build -DskipTests \
-            -Djib.to.image=${{ secrets.DOCKER_NAME }}/bookmarker-api:latest
+          ./mvnw jib:build \
+            -DskipTests \
+            -Djib.to.auth.username=${{ secrets.DOCKER_USERNAME }} \
+            -Djib.to.auth.password=${{ secrets.DOCKER_PASSWORD }}
